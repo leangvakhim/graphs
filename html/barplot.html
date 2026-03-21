@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Bar Plots in EDA</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for the visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-white text-gray-800 font-sans min-h-screen">
+
+    <div class="max-w-5xl mx-auto px-4 py-12">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Understanding Bar Plots</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                In Exploratory Data Analysis (EDA), a Bar Plot is one of the best tools to compare different categories.
+                Let's break down how to read one!
+            </p>
+        </header>
+
+        <!-- Chart Section -->
+        <div class="bg-white border-2 border-gray-100 rounded-2xl shadow-xl p-6 mb-12 relative overflow-hidden">
+            <!-- Decorative background element -->
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-blue-50 rounded-full opacity-50 z-0"></div>
+
+            <div class="relative z-10 w-full max-w-3xl mx-auto">
+                <canvas id="edaBarChart"></canvas>
+            </div>
+            <p class="text-center text-sm text-gray-500 mt-4 italic">Hover over or tap the colorful bars to see more
+                details!</p>
+        </div>
+
+        <!-- Explanation Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Feature 1: The X-Axis -->
+            <div class="bg-indigo-50 rounded-xl p-6 border-l-4 border-indigo-500 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">➡️</span>
+                    <h3 class="text-xl font-bold text-indigo-900">The X-Axis (Bottom Line)</h3>
+                </div>
+                <p class="text-indigo-800">
+                    This is the horizontal line at the bottom. It shows the <strong>Categories</strong> or groups we are
+                    comparing. In our chart above, the categories are different types of electronic gadgets.
+                </p>
+            </div>
+
+            <!-- Feature 2: The Y-Axis -->
+            <div class="bg-emerald-50 rounded-xl p-6 border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">⬆️</span>
+                    <h3 class="text-xl font-bold text-emerald-900">The Y-Axis (Side Line)</h3>
+                </div>
+                <p class="text-emerald-800">
+                    This is the vertical line on the left. It shows the <strong>Numbers or Values</strong>. It helps us
+                    measure "how much" or "how many." In our chart, it shows the number of units sold.
+                </p>
+            </div>
+
+            <!-- Feature 3: The Bars -->
+            <div class="bg-rose-50 rounded-xl p-6 border-l-4 border-rose-500 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">📊</span>
+                    <h3 class="text-xl font-bold text-rose-900">The Bars (Rectangles)</h3>
+                </div>
+                <p class="text-rose-800">
+                    The height of each colorful rectangle represents the value for that category. <strong>A taller bar
+                        means a bigger number.</strong> You can quickly look at the chart and see which gadget sold the
+                    most just by finding the tallest bar!
+                </p>
+            </div>
+
+            <!-- Feature 4: Colors & Tooltips -->
+            <div class="bg-amber-50 rounded-xl p-6 border-l-4 border-amber-500 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">🎨</span>
+                    <h3 class="text-xl font-bold text-amber-900">Colors & Tooltips</h3>
+                </div>
+                <p class="text-amber-800">
+                    <strong>Colors</strong> help separate the categories visually so they don't blend together.
+                    <strong>Tooltips</strong> are the little black boxes that pop up when you hover over a bar—they give
+                    you the exact, precise number hidden inside the bar.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="/js/barplot.js"></script>
+</body>
+
+</html>

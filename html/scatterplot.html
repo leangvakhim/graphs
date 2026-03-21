@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Scatterplots in EDA</title>
+    <!-- Tailwind CSS for layout and styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for drawing the scatterplots -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Ensuring standard fonts and a clean white background */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="antialiased pb-20">
+
+    <!-- Header Section -->
+    <header class="max-w-5xl mx-auto pt-16 pb-10 px-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+            Understanding Scatterplots 📊
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            A scatterplot is simply a graph that plots dots to show the relationship between <b>two different
+                things</b>.
+            In Data Analysis (EDA), we look at these dots to find hidden stories. Let's learn how to read them!
+        </p>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 space-y-16">
+
+        <!-- Feature 1: Positive Correlation -->
+        <section
+            class="bg-blue-50 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm border border-blue-100">
+            <div class="flex-1 space-y-4 text-left">
+                <div
+                    class="inline-block px-3 py-1 bg-blue-500 text-white rounded-full text-sm font-bold tracking-wider uppercase">
+                    Pattern 1</div>
+                <h2 class="text-3xl font-bold text-gray-800">Positive Correlation</h2>
+                <h3 class="text-xl text-blue-600 font-semibold">"They grow up together! 📈"</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    When the dots slope <b>upwards from left to right</b>, it means that as one thing increases, the
+                    other thing also increases.
+                </p>
+                <p class="text-gray-600 text-sm bg-white p-3 rounded-lg border border-blue-200">
+                    <b>Real-world example:</b> Hours spent studying (bottom) vs. Test score (side). The more you study,
+                    the higher your score tends to be.
+                </p>
+            </div>
+            <div class="flex-1 w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="chartPositive"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature 2: Negative Correlation -->
+        <section
+            class="bg-rose-50 rounded-3xl p-8 flex flex-col md:flex-row-reverse items-center gap-8 shadow-sm border border-rose-100">
+            <div class="flex-1 space-y-4 text-left">
+                <div
+                    class="inline-block px-3 py-1 bg-rose-500 text-white rounded-full text-sm font-bold tracking-wider uppercase">
+                    Pattern 2</div>
+                <h2 class="text-3xl font-bold text-gray-800">Negative Correlation</h2>
+                <h3 class="text-xl text-rose-600 font-semibold">"A balancing act! 📉"</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    When the dots slope <b>downwards from left to right</b>, it means that as one thing increases, the
+                    other thing decreases. They move in opposite directions.
+                </p>
+                <p class="text-gray-600 text-sm bg-white p-3 rounded-lg border border-rose-200">
+                    <b>Real-world example:</b> Hours spent playing video games (bottom) vs. Test score (side). More
+                    games might mean lower scores.
+                </p>
+            </div>
+            <div class="flex-1 w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="chartNegative"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature 3: No Correlation -->
+        <section
+            class="bg-gray-50 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm border border-gray-200">
+            <div class="flex-1 space-y-4 text-left">
+                <div
+                    class="inline-block px-3 py-1 bg-gray-500 text-white rounded-full text-sm font-bold tracking-wider uppercase">
+                    Pattern 3</div>
+                <h2 class="text-3xl font-bold text-gray-800">No Correlation</h2>
+                <h3 class="text-xl text-gray-600 font-semibold">"Totally random! 🤷"</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    When the dots look like a messy cloud with <b>no clear direction</b>, it means these two things have
+                    nothing to do with each other. Knowing one doesn't help you guess the other.
+                </p>
+                <p class="text-gray-600 text-sm bg-white p-3 rounded-lg border border-gray-200">
+                    <b>Real-world example:</b> Your shoe size (bottom) vs. Your math test score (side). One has no
+                    impact on the other!
+                </p>
+            </div>
+            <div class="flex-1 w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="chartNone"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature 4: Outliers -->
+        <section
+            class="bg-amber-50 rounded-3xl p-8 flex flex-col md:flex-row-reverse items-center gap-8 shadow-sm border border-amber-100">
+            <div class="flex-1 space-y-4 text-left">
+                <div
+                    class="inline-block px-3 py-1 bg-amber-500 text-white rounded-full text-sm font-bold tracking-wider uppercase">
+                    Feature 4</div>
+                <h2 class="text-3xl font-bold text-gray-800">Outliers</h2>
+                <h3 class="text-xl text-amber-600 font-semibold">"The odd ones out! 👽"</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Most dots follow a rule, but sometimes a dot sits <b>far away from the rest of the group</b>. We
+                    call these "Outliers". In EDA, we investigate these because they might be a mistake, or something
+                    very special!
+                </p>
+                <p class="text-gray-600 text-sm bg-white p-3 rounded-lg border border-amber-200">
+                    <b>Real-world example:</b> A neighborhood where most houses cost $300k, but there is one giant
+                    mansion that costs $5 Million. That mansion is an outlier.
+                </p>
+            </div>
+            <div class="flex-1 w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="chartOutlier"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature 5: Clusters -->
+        <section
+            class="bg-emerald-50 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm border border-emerald-100">
+            <div class="flex-1 space-y-4 text-left">
+                <div
+                    class="inline-block px-3 py-1 bg-emerald-500 text-white rounded-full text-sm font-bold tracking-wider uppercase">
+                    Feature 5</div>
+                <h2 class="text-3xl font-bold text-gray-800">Clusters</h2>
+                <h3 class="text-xl text-emerald-600 font-semibold">"Birds of a feather! 🐦"</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Sometimes dots bunch together in distinct <b>groups or islands</b>. This tells us that our data has
+                    different types of categories hiding inside it!
+                </p>
+                <p class="text-gray-600 text-sm bg-white p-3 rounded-lg border border-emerald-200">
+                    <b>Real-world example:</b> Height vs Weight of animals. You might see one cluster for "Dogs" and a
+                    totally separate cluster for "Horses".
+                </p>
+            </div>
+            <div class="flex-1 w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="chartCluster"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/js/scatterplot.js"></script>
+</body>
+
+</html>

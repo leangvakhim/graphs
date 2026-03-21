@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Pair Plots</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Ensuring smooth rendering and basic reset */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 min-h-screen p-6 lg:p-12">
+
+    <!-- Header Section -->
+    <header class="max-w-6xl mx-auto mb-10 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+            Demystifying the <span class="text-indigo-600">Pair Plot</span> 📊
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            A pair plot is like a speed-dating event for your data. It helps you see how every feature interacts with
+            every other feature, all in one quick glance!
+        </p>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-12 gap-12 items-start">
+
+        <!-- Left Column: The Visualization -->
+        <div class="xl:col-span-7 flex flex-col items-center bg-gray-50 p-6 md:p-8 rounded-2xl border border-gray-100">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Interactive Pair Plot</h2>
+            <p class="text-sm text-gray-500 mb-6 text-center">Simulated data of 3 fictional animal species based on
+                Size, Weight, and Speed.</p>
+
+            <!-- Canvas where JS will draw the plot -->
+            <canvas id="pairplotCanvas" width="600" height="600" class="bg-white"></canvas>
+
+            <!-- Legend -->
+            <div
+                class="flex flex-wrap gap-6 justify-center mt-6 bg-white py-3 px-6 rounded-full shadow-sm border border-gray-100">
+                <div class="flex items-center">
+                    <span class="w-4 h-4 rounded-full mr-2" style="background-color: #FF6B6B;"></span>
+                    <span class="font-medium text-gray-700">Red Foxes</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="w-4 h-4 rounded-full mr-2" style="background-color: #4ECDC4;"></span>
+                    <span class="font-medium text-gray-700">Blue Birds</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="w-4 h-4 rounded-full mr-2" style="background-color: #F4D03F;"></span>
+                    <span class="font-medium text-gray-700">Yellow Frogs</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Explanations -->
+        <div class="xl:col-span-5 flex flex-col gap-6">
+            <h3 class="text-3xl font-bold text-gray-900 mb-2">How to read this chart:</h3>
+
+            <!-- Explanation Card 1 -->
+            <div
+                class="bg-white p-6 rounded-xl border-l-4 border-indigo-500 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">🪟</span>
+                    <h4 class="text-xl font-bold text-gray-900">1. The Grid Layout</h4>
+                </div>
+                <p class="text-gray-600 leading-relaxed">
+                    Notice how the features (<strong class="text-gray-800">Size, Weight, Speed</strong>) are listed on
+                    both the left side (rows) and the bottom (columns). To see how <i>Weight</i> relates to
+                    <i>Speed</i>, simply find the intersection of the Weight row and the Speed column!
+                </p>
+            </div>
+
+            <!-- Explanation Card 2 -->
+            <div
+                class="bg-white p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">🏔️</span>
+                    <h4 class="text-xl font-bold text-gray-900">2. The Diagonal (Histograms)</h4>
+                </div>
+                <p class="text-gray-600 leading-relaxed">
+                    Look at the boxes going down from top-left to bottom-right. Instead of comparing two things, these
+                    boxes look in the mirror. They are <strong>Histograms</strong> showing the shape or "distribution"
+                    of a single feature. High peaks mean many animals share that specific measurement.
+                </p>
+            </div>
+
+            <!-- Explanation Card 3 -->
+            <div
+                class="bg-white p-6 rounded-xl border-l-4 border-amber-400 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">✨</span>
+                    <h4 class="text-xl font-bold text-gray-900">3. The Intersections (Scatter Plots)</h4>
+                </div>
+                <p class="text-gray-600 leading-relaxed">
+                    Every box not on the diagonal is a <strong>Scatter Plot</strong>. Each dot is one animal.
+                    <br><br>
+                    • If the dots form a line pointing <strong class="text-blue-600">UP</strong>, it means as one
+                    feature increases, the other does too (Positive Correlation).<br>
+                    • If dots are scattered randomly, there is no relationship.
+                </p>
+            </div>
+
+            <!-- Explanation Card 4 -->
+            <div class="bg-white p-6 rounded-xl border-l-4 border-rose-400 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-3">🎨</span>
+                    <h4 class="text-xl font-bold text-gray-900">4. The Colors (Categories)</h4>
+                </div>
+                <p class="text-gray-600 leading-relaxed">
+                    The magic happens with color! By coloring dots based on their species, we can instantly see
+                    clusters. Notice how Red Foxes might group tightly together in one area, while Yellow Frogs gather
+                    in another? Pair plots make finding these distinct groups incredibly easy.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="/js/pairplot.js"></script>
+</body>
+
+</html>

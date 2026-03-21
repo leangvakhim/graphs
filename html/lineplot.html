@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Line Plots in EDA</title>
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for the Line Plot -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPink: '#ec4899',
+                        brandOrange: '#f97316',
+                        brandBlue: '#3b82f6',
+                        brandGreen: '#10b981',
+                        brandPurple: '#8b5cf6'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-white text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-pink-200">
+
+    <div class="max-w-7xl mx-auto w-full p-4 md:p-8 flex-grow flex flex-col">
+
+        <!-- Header Section -->
+        <header class="text-center mb-10 mt-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                The Magic of <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500">Line Plots</span>
+                in EDA
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+                Exploratory Data Analysis (EDA) is like being a detective with data. A <strong>Line Plot</strong> is
+                your best tool for seeing how things change over time. Let's break it down!
+            </p>
+        </header>
+
+        <!-- Main Content: Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+
+            <!-- Left Side: The Interactive Chart -->
+            <div
+                class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 p-4 md:p-6 sticky top-8">
+                <div class="mb-4 text-center">
+                    <h2 class="text-xl font-bold text-slate-800">Monthly Cafe Sales</h2>
+                    <p class="text-sm text-slate-500">Hover over the dots to see exact numbers!</p>
+                </div>
+
+                <div class="relative h-[60vh] lg:h-[500px] w-full">
+                    <canvas id="edaLineChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Right Side: The Explanations -->
+            <div class="space-y-6">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2 border-b-2 border-slate-100 pb-2">
+                    Anatomy of a Line Plot
+                </h3>
+
+                <!-- Feature 1: X-Axis -->
+                <div class="bg-blue-50/50 rounded-2xl p-5 border-l-4 border-blue-500 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div
+                            class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                            1</div>
+                        <h4 class="text-lg font-bold text-blue-900">The Timeline (X-Axis)</h4>
+                    </div>
+                    <p class="text-slate-700 leading-relaxed pl-11">
+                        Look at the <strong>bottom horizontal line</strong> (Jan, Feb, Mar...). In EDA, the X-axis
+                        almost always represents <em>time</em> or a sequence. It reads from left to right, showing us
+                        the journey from the past to the future.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Y-Axis -->
+                <div
+                    class="bg-green-50/50 rounded-2xl p-5 border-l-4 border-green-500 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div
+                            class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                            2</div>
+                        <h4 class="text-lg font-bold text-green-900">The Measurements (Y-Axis)</h4>
+                    </div>
+                    <p class="text-slate-700 leading-relaxed pl-11">
+                        Look at the <strong>vertical line on the left</strong> (0 to 100). This shows what we are
+                        measuring. In this case, it's the number of items sold. The higher up you go, the bigger the
+                        number!
+                    </p>
+                </div>
+
+                <!-- Feature 3: Data Points & The Line -->
+                <div class="bg-pink-50/50 rounded-2xl p-5 border-l-4 border-pink-500 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div
+                            class="bg-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                            3</div>
+                        <h4 class="text-lg font-bold text-pink-900">The Story (Lines & Dots)</h4>
+                    </div>
+                    <p class="text-slate-700 leading-relaxed pl-11">
+                        Every <strong>dot</strong> is a single piece of data (e.g., exactly how many Ice Creams were
+                        sold in July). <br><br>
+                        The <strong>line connecting them</strong> reveals the "Trend". Instead of staring at a boring
+                        spreadsheet of numbers, the line instantly tells our brain: <em>"Ice cream sales go way up in
+                            the summer!"</em>
+                    </p>
+                </div>
+
+                <!-- Feature 4: The Legend -->
+                <div
+                    class="bg-purple-50/50 rounded-2xl p-5 border-l-4 border-purple-500 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div
+                            class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                            4</div>
+                        <h4 class="text-lg font-bold text-purple-900">The Key (Legend)</h4>
+                    </div>
+                    <p class="text-slate-700 leading-relaxed pl-11">
+                        Look at the top of the chart. The Legend acts like a map key. It tells us that the <strong>Pink
+                            Line</strong> is Ice Cream and the <strong>Orange Line</strong> is Hot Chocolate. In EDA,
+                        this helps us compare multiple things at the exact same time.
+                    </p>
+                </div>
+
+                <!-- Feature 5: Intersections & Patterns -->
+                <div
+                    class="bg-orange-50/50 rounded-2xl p-5 border-l-4 border-orange-500 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div
+                            class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                            5</div>
+                        <h4 class="text-lg font-bold text-orange-900">Patterns & Crossovers</h4>
+                    </div>
+                    <p class="text-slate-700 leading-relaxed pl-11">
+                        Notice where the lines cross over in April and October? In EDA, this is a "Eureka!" moment. It
+                        shows exactly when consumer habits flip from cold drinks to hot drinks due to changing seasons.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/lineplot.js"></script>
+</body>
+
+</html>

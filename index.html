@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphs Visual</title>
+    <!-- Importing Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+
+    <!-- Main Container -->
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+
+        <!-- Header Section -->
+        <div class="bg-indigo-600 py-8 px-6 sm:px-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-white tracking-tight">
+                All Graphs Visualization
+            </h1>
+            <p class="text-indigo-100 text-center mt-3 text-lg">
+                Select a chart type below to view the interactive visualization.
+            </p>
+        </div>
+
+        <!-- Links Grid Section -->
+        <div class="p-6 sm:p-10">
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <li>
+                    <a href="/html/countplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Count Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/barplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Bar Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/piechart.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Pie Chart
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/histogram.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Histogram
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/kde.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Kernel Density Estimation
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/barplot_with_kde.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Bar Plot with KDE
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/scatterplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Scatter Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/lineplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Line Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/boxplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Box Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/violinplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Violin Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/barplot_with_estimator.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Bar Plot with Estimator
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/pairplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Pair Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/heatmap.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Heatmap
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/gridplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Grid Plot
+                    </a>
+                </li>
+                <li>
+                    <a href="/html/jointplot.html"
+                        class="flex items-center justify-center h-full bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold py-4 px-6 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-md text-center">
+                        Joint Plot
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

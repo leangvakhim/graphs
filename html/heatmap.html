@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Heatmaps in EDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom tooltip and transition styles */
+        .cell-transition {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .cell-hover:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 2px solid black;
+        }
+
+        .axis-label {
+            transition: color 0.2s ease;
+        }
+
+        .highlight-axis {
+            font-weight: bold;
+            color: #111827;
+            /* text-gray-900 */
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 font-sans min-h-screen">
+
+    <!-- Header Section -->
+    <header class="bg-indigo-600 text-white py-8 px-4 shadow-md">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Visualizing Data: The Correlation Heatmap</h1>
+            <p class="text-indigo-100 text-lg max-w-3xl">
+                In Exploratory Data Analysis (EDA), a heatmap is a colorful grid that shows how different variables
+                relate to each other.
+                Hover over the colorful squares below to see exactly how it works in plain English!
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto p-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: The Heatmap -->
+        <div
+            class="lg:col-span-7 bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Student Lifestyle Dataset</h2>
+
+            <div class="overflow-x-auto w-full flex justify-center pb-4">
+                <!-- Heatmap Container -->
+                <div id="heatmap-container" class="relative">
+                    <!-- Javascript will inject the grid here -->
+                </div>
+            </div>
+
+            <!-- Color Legend -->
+            <div class="mt-8 w-full max-w-md">
+                <h3 class="text-sm font-semibold text-gray-600 mb-2 text-center">Color Legend: Correlation Strength</h3>
+                <div class="h-4 w-full rounded-full flex overflow-hidden shadow-inner">
+                    <div class="h-full flex-1"
+                        style="background: linear-gradient(to right, #dc2626, #fca5a5, #ffffff, #93c5fd, #2563eb);">
+                    </div>
+                </div>
+                <div class="flex justify-between text-xs text-gray-500 mt-1 font-medium">
+                    <span>-1.0 (Opposites)</span>
+                    <span>0 (No Link)</span>
+                    <span>+1.0 (Matching)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Explanations -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <!-- Dynamic Interactive Box -->
+            <div id="interactive-explanation"
+                class="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-6 shadow-md min-h-[200px]">
+                <div class="flex items-center gap-3 mb-3">
+                    <div
+                        class="w-8 h-8 rounded-full bg-indigo-200 flex items-center justify-center text-indigo-700 font-bold">
+                        ?</div>
+                    <h3 class="text-xl font-bold text-indigo-900">Interactive Guide</h3>
+                </div>
+                <p id="dynamic-text" class="text-gray-700 text-lg">
+                    <span class="animate-pulse inline-block text-indigo-500 mr-2">←</span>
+                    <strong>Hover over any square</strong> on the heatmap to understand what the color and number mean.
+                </p>
+                <div id="dynamic-details" class="mt-4 hidden">
+                    <div
+                        class="flex items-center justify-between bg-white p-3 rounded-lg border border-indigo-100 mb-3">
+                        <span id="var1-name" class="font-semibold text-gray-700">Var 1</span>
+                        <span class="text-gray-400 text-sm">vs</span>
+                        <span id="var2-name" class="font-semibold text-gray-700">Var 2</span>
+                    </div>
+                    <p id="correlation-value" class="text-2xl font-black mb-1"></p>
+                    <p id="correlation-meaning" class="text-sm text-gray-600 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- Static Explanations -->
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Key Heatmap Features</h3>
+
+                <div class="space-y-4">
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded bg-blue-500 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm shadow">
+                            1.0</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">The Diagonal Line</h4>
+                            <p class="text-sm text-gray-600">Notice the dark blue line going from top-left to
+                                bottom-right? These are always exactly 1.0 because it's comparing a variable against
+                                itself (e.g., Study Hours vs Study Hours). It's a perfect match!</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded bg-red-500 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm shadow">
+                            -ve</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Red Colors (Negative)</h4>
+                            <p class="text-sm text-gray-600">Red means variables move in <strong>opposite
+                                    directions</strong>. If one goes up, the other goes down. Example: More Video Games
+                                usually means Lower Test Scores.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded bg-blue-500 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm shadow">
+                            +ve</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Blue Colors (Positive)</h4>
+                            <p class="text-sm text-gray-600">Blue means variables move in the <strong>same
+                                    direction</strong>. If one goes up, the other goes up. Example: More Study Hours
+                                usually means Higher Test Scores.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded bg-white border-2 border-gray-200 flex-shrink-0 flex items-center justify-center text-gray-500 font-bold text-sm shadow-sm">
+                            0.0</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">White/Faint Colors (Neutral)</h4>
+                            <p class="text-sm text-gray-600">White or very pale colors mean the value is near zero.
+                                There is <strong>no real relationship</strong> between the two variables.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="/js/heatmap.js"></script>
+</body>
+
+</html>

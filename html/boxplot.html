@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Boxplots in EDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base transitions for smooth SVG animations */
+        .svg-part {
+            transition: all 0.3s ease-in-out;
+            transform-origin: center;
+        }
+
+        /* State classes applied via JavaScript */
+        .dimmed {
+            opacity: 0.15;
+            filter: grayscale(80%);
+        }
+
+        .highlight-line {
+            opacity: 1 !important;
+            stroke-width: 10px !important;
+            filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.4));
+            transform: scaleY(1.1);
+        }
+
+        .highlight-horiz-line {
+            opacity: 1 !important;
+            stroke-width: 8px !important;
+            filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .highlight-box {
+            opacity: 1 !important;
+            stroke-width: 6px !important;
+            filter: drop-shadow(0px 8px 16px rgba(59, 130, 246, 0.5));
+            transform: scale(1.02);
+        }
+
+        .highlight-outlier {
+            opacity: 1 !important;
+            r: 12px !important;
+            filter: drop-shadow(0px 0px 10px rgba(239, 68, 68, 0.8));
+            transform: scale(1.2);
+        }
+
+        /* Custom gradient text */
+        .text-gradient {
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 font-sans min-h-screen p-4 md:p-8 selection:bg-blue-200">
+
+    <div class="max-w-6xl mx-auto">
+
+        <!-- Header Section -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-gradient">Understanding the Boxplot</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                In Exploratory Data Analysis (EDA), a boxplot is like a bird's-eye view of your data.
+                Hover over the cards below to illuminate different parts of the graph and see how it helps us spot
+                trends, averages, and weird anomalies!
+            </p>
+        </div>
+
+        <!-- Visualization Canvas (SVG) -->
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl shadow-xl p-6 mb-10 overflow-hidden relative">
+            <svg viewBox="0 0 900 300" class="w-full h-auto max-h-[400px]" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                    <!-- Gradient for the main box -->
+                    <linearGradient id="boxGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#a78bfa" /> <!-- Purple-400 -->
+                        <stop offset="100%" stop-color="#60a5fa" /> <!-- Blue-400 -->
+                    </linearGradient>
+                    <!-- Gradient for the median line to make it pop -->
+                    <linearGradient id="medianGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#f43f5e" /> <!-- Rose-500 -->
+                        <stop offset="100%" stop-color="#e11d48" /> <!-- Rose-600 -->
+                    </linearGradient>
+                </defs>
+
+                <!-- X-Axis to ground the visual -->
+                <line x1="50" y1="260" x2="850" y2="260" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+                <text x="50" y="285" fill="#64748b" font-size="16" font-weight="600" font-family="sans-serif">Lower
+                    Values</text>
+                <text x="850" y="285" fill="#64748b" font-size="16" font-weight="600" font-family="sans-serif"
+                    text-anchor="end">Higher Values</text>
+
+                <!-- Dotted grid line for median -->
+                <line x1="420" y1="40" x2="420" y2="260" stroke="#D62828" stroke-width="2" stroke-dasharray="6,6" />
+
+                <!-- THE BOXPLOT ELEMENTS -->
+
+                <!-- Lower Whisker Line (Horizontal) -->
+                <line id="svg-whisker-lower" class="svg-part" x1="120" y1="150" x2="260" y2="150" stroke="#475569"
+                    stroke-width="4" stroke-linecap="round" />
+
+                <!-- Upper Whisker Line (Horizontal) -->
+                <line id="svg-whisker-upper" class="svg-part" x1="580" y1="150" x2="720" y2="150" stroke="#475569"
+                    stroke-width="4" stroke-linecap="round" />
+
+                <!-- Minimum Line (Vertical) -->
+                <line id="svg-min" class="svg-part" x1="120" y1="100" x2="120" y2="200" stroke="#334155"
+                    stroke-width="6" stroke-linecap="round" />
+
+                <!-- Maximum Line (Vertical) -->
+                <line id="svg-max" class="svg-part" x1="720" y1="100" x2="720" y2="200" stroke="#334155"
+                    stroke-width="6" stroke-linecap="round" />
+
+                <!-- The IQR Box -->
+                <rect id="svg-box" class="svg-part" x="260" y="90" width="320" height="120" rx="12"
+                    fill="url(#boxGradient)" stroke="#4f46e5" stroke-width="4" />
+
+                <!-- Q1 Line (Left edge of box) -->
+                <line id="svg-q1" class="svg-part" x1="260" y1="90" x2="260" y2="210" stroke="#4338ca" stroke-width="6"
+                    stroke-linecap="round" />
+
+                <!-- Q3 Line (Right edge of box) -->
+                <line id="svg-q3" class="svg-part" x1="580" y1="90" x2="580" y2="210" stroke="#4338ca" stroke-width="6"
+                    stroke-linecap="round" />
+
+                <!-- Median Line (Inside the box) -->
+                <line id="svg-median" class="svg-part" x1="420" y1="80" x2="420" y2="220" stroke="url(#medianGradient)"
+                    stroke-width="8" stroke-linecap="round" />
+
+                <!-- Outliers (Circles) -->
+                <circle id="svg-outlier-1" class="svg-part svg-outlier-group" cx="800" cy="150" r="7" fill="#ef4444"
+                    stroke="#7f1d1d" stroke-width="2" />
+                <circle id="svg-outlier-2" class="svg-part svg-outlier-group" cx="835" cy="150" r="7" fill="#ef4444"
+                    stroke="#7f1d1d" stroke-width="2" />
+                <circle id="svg-outlier-3" class="svg-part svg-outlier-group" cx="60" cy="150" r="7" fill="#ef4444"
+                    stroke="#7f1d1d" stroke-width="2" />
+
+            </svg>
+
+            <!-- Dynamic Info Badge (Appears when hovering) -->
+            <div id="dynamic-info"
+                class="absolute top-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full shadow-md border border-slate-200 text-slate-700 font-semibold opacity-0 transition-opacity duration-300 pointer-events-none text-center">
+                Hover over a card to explore
+            </div>
+        </div>
+
+        <!-- Explanatory Interactive Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="cards-container">
+            <!-- Cards will be injected here by JS -->
+        </div>
+
+    </div>
+
+    <script src="/js/boxplot.js"></script>
+</body>
+
+</html>

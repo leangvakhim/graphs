@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Understanding Count Plots</title>
+
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom styles for the chart */
+    .bar {
+      transition: opacity 0.2s, height 0.8s ease-out;
+    }
+    .bar:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+
+    #tooltip {
+      position: absolute;
+      display: none;
+      pointer-events: none;
+      transform: translate(-50%, -100%);
+      margin-top: -15px;
+      z-index: 50;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50 p-4 md:p-8 font-sans text-gray-800 flex justify-center">
+  <div class="max-w-5xl w-full">
+
+    <!-- Main Content Card - Enforcing White Background -->
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+
+      <!-- Header Section -->
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white">
+        <div class="flex items-center gap-4 mb-2">
+          <i data-lucide="bar-chart-3" class="text-blue-200 w-8 h-8"></i>
+          <h1 class="text-3xl font-bold">Understanding the Count Plot</h1>
+        </div>
+        <p class="text-blue-100 text-lg max-w-2xl">
+          Your first step in Exploratory Data Analysis (EDA). Think of it as sorting a giant bag of mixed candies by color, and then stacking them up to see which color you have the most of!
+        </p>
+      </div>
+
+      <div class="p-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+        <!-- Left Column: The Visualization -->
+        <div class="flex flex-col">
+          <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-gray-800">
+            <i data-lucide="eye" class="text-indigo-500 w-6 h-6"></i>
+            Visual Display: Favorite Pets Survey
+          </h2>
+
+          <!-- Chart Container -->
+          <div class="bg-white border-2 border-gray-50 rounded-2xl p-6 shadow-sm h-[400px] w-full relative flex flex-col pl-12">
+
+            <!-- Tooltip -->
+            <div id="tooltip" class="bg-white p-4 rounded-xl shadow-lg border border-gray-100">
+              <p id="tt-label" class="font-bold text-gray-800 text-lg"></p>
+              <p class="text-gray-600">
+                Total Count: <span id="tt-value" class="font-bold"></span>
+              </p>
+            </div>
+
+            <!-- Y-Axis Labels -->
+            <div class="absolute left-2 top-6 bottom-8 flex flex-col justify-between text-xs font-medium text-gray-400">
+              <span>500</span>
+              <span>400</span>
+              <span>300</span>
+              <span>200</span>
+              <span>100</span>
+              <span>0</span>
+            </div>
+
+            <!-- Chart Drawing Area -->
+            <div id="chart-area" class="flex-1 flex items-end relative border-b border-gray-200">
+
+              <!-- Background Grid Lines -->
+              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-0">
+                <div class="border-t border-dashed border-gray-200 w-full h-0"></div>
+                <div class="border-t border-dashed border-gray-200 w-full h-0"></div>
+                <div class="border-t border-dashed border-gray-200 w-full h-0"></div>
+                <div class="border-t border-dashed border-gray-200 w-full h-0"></div>
+                <div class="border-t border-dashed border-gray-200 w-full h-0"></div>
+                <div class="border-t border-dashed border-gray-200 w-full h-0"></div>
+              </div>
+
+              <!-- Bars will be injected here via JavaScript -->
+            </div>
+
+            <!-- X-Axis Labels Container -->
+            <div id="x-axis" class="flex text-sm font-semibold text-gray-500 mt-2">
+              <!-- Labels will be injected here via JavaScript -->
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column: The Explanation -->
+        <div class="flex flex-col justify-center space-y-8">
+
+          <!-- Feature 1 -->
+          <div class="flex gap-4 items-start">
+            <div class="bg-blue-100 p-3 rounded-full text-blue-600 mt-1 shrink-0">
+              <i data-lucide="info" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">What am I looking at?</h3>
+              <p class="text-gray-600 leading-relaxed">
+                A Count Plot simply counts how many times a specific "category" appears in your dataset. In our example, we asked people their favorite pet. The plot counts how many people said "Dogs", how many said "Cats", etc.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="flex gap-4 items-start">
+            <div class="bg-emerald-100 p-3 rounded-full text-emerald-600 mt-1 shrink-0">
+              <i data-lucide="target" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Anatomy of the Plot</h3>
+              <ul class="space-y-3 text-gray-600">
+                <li class="flex items-start gap-2">
+                  <span class="font-bold text-gray-800 min-w-[100px]">The Bottom Line (X-Axis):</span>
+                  <span>Shows the different groups or categories (Dogs, Cats, Fish).</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="font-bold text-gray-800 min-w-[100px]">The Side Line (Y-Axis):</span>
+                  <span>Shows the actual numbers (0, 100, 200...). This is the "Count".</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="font-bold text-gray-800 min-w-[100px]">The Bars:</span>
+                  <span>The taller the bar, the higher the count! You can instantly see that the Blue bar (Dogs) is the tallest, meaning it's the most popular.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="flex gap-4 items-start">
+            <div class="bg-amber-100 p-3 rounded-full text-amber-600 mt-1 shrink-0">
+              <i data-lucide="lightbulb" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Why use it in EDA?</h3>
+              <p class="text-gray-600 leading-relaxed">
+                When you first get raw data, it's just a messy spreadsheet. A Count Plot instantly reveals the <strong>"imbalances"</strong> in your data. It tells you immediately what is common, what is rare, and if any categories are completely missing.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/countplot.js"></script>
+</body>
+</html>

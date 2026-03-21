@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Plots in EDA: With vs Without Estimators</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plotly.js for interactive charting -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            /* Explicitly set white background */
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 p-6 md:p-12">
+
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1
+                class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
+                Understanding Bar Plots in EDA
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                In Exploratory Data Analysis (EDA), we use bar plots to compare different categories. But what happens
+                when we need to show <strong>exact counts</strong> versus <strong>averages with uncertainty</strong>?
+                Let's break it down!
+            </p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+            <!-- Card 1: Without Estimators -->
+            <div
+                class="bg-blue-50 rounded-2xl p-6 md:p-8 shadow-lg border border-blue-100 hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div
+                        class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 shadow-md">
+                        1</div>
+                    <h2 class="text-2xl font-bold text-blue-800">Bar Plot WITHOUT Estimators</h2>
+                </div>
+
+                <!-- Chart Container -->
+                <div id="chart-without"
+                    class="w-full h-72 bg-white rounded-xl shadow-inner mb-6 border border-gray-100 p-2"></div>
+
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-700 font-medium text-lg">
+                        🎯 <strong class="text-blue-700">The "Exact Count" Plot</strong>
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        This plot shows the <strong>exact total or count</strong> of something. There is no guessing or
+                        averaging involved. One bar equals one specific number.
+                    </p>
+                    <div class="bg-white p-4 rounded-lg border-l-4 border-blue-400 text-sm text-gray-600">
+                        <strong>Analogy:</strong> Imagine you are counting fruit in a basket. You find exactly 150
+                        apples, 120 bananas, and 90 oranges. The bar simply goes up to that exact number.
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 mt-2">
+                        <li><strong>What the bar means:</strong> The absolute total value (e.g., total sales, number of
+                            customers).</li>
+                        <li><strong>When to use it:</strong> When you want to see "How many?" or "What is the total?"
+                            for different categories.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 2: With Estimators -->
+            <div
+                class="bg-purple-50 rounded-2xl p-6 md:p-8 shadow-lg border border-purple-100 hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div
+                        class="bg-purple-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 shadow-md">
+                        2</div>
+                    <h2 class="text-2xl font-bold text-purple-800">Bar Plot WITH Estimators</h2>
+                </div>
+
+                <!-- Chart Container -->
+                <div id="chart-with"
+                    class="w-full h-72 bg-white rounded-xl shadow-inner mb-6 border border-gray-100 p-2"></div>
+
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-700 font-medium text-lg">
+                        ⚖️ <strong class="text-purple-700">The "Average & Wiggle Room" Plot</strong>
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        This plot calculates an <strong>estimate (like an average)</strong> from many data points.
+                        Because it's an average, we add "error bars" (the little black lines) to show how spread out the
+                        data is.
+                    </p>
+                    <div class="bg-white p-4 rounded-lg border-l-4 border-purple-400 text-sm text-gray-600">
+                        <strong>Analogy:</strong> You weigh the 150 apples. The <em>average</em> weight is 100g. But not
+                        every apple is exactly 100g! Some are 90g, some are 110g. The bar shows the 100g average, and
+                        the line on top shows the "give or take" range (the uncertainty).
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 mt-2">
+                        <li><strong>What the bar means:</strong> An aggregated value (usually the Mean/Average).</li>
+                        <li><strong>What the line means:</strong> The "Estimator" or Confidence Interval. A short line
+                            means all the data is very close to the average. A tall line means the data is highly
+                            unpredictable and spread out.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Summary Section -->
+        <div class="mt-12 bg-gray-50 p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Quick Summary</h3>
+            <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+                Use <strong>Plots Without Estimators</strong> to show hard facts and totals. Use <strong>Plots With
+                    Estimators</strong> when you are summarizing a large group of varying numbers and need to visually
+                represent the average and how reliable that average is!
+            </p>
+        </div>
+
+    </div>
+
+    <script src="/js/barplot_with_estimator.js"></script>
+</body>
+
+</html>

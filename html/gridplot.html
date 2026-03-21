@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Gridplots in EDA</title>
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plotly.js for Visualizations -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            /* Explicitly setting white background as requested */
+        }
+    </style>
+</head>
+
+<body class="text-gray-800 antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12 px-6 shadow-md">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Demystifying Gridplots in EDA</h1>
+            <p class="text-xl md:text-2xl text-blue-100 max-w-3xl">
+                A visual guide to understanding <strong>relplot</strong> (Relational Plots) and <strong>catplot</strong>
+                (Categorical Plots). Learn how splitting your data into a grid makes complex patterns incredibly easy to
+                see.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+
+        <!-- Introduction to Gridplots -->
+        <section class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg shadow-sm">
+            <h2 class="text-2xl font-bold text-blue-800 mb-3">What is a Gridplot (Facet Grid)?</h2>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                Imagine you have a huge pile of vacation photos. Instead of throwing them all into one giant, confusing
+                pile, you organize them neatly into a photo album, creating a grid where page 1 is "Beach Photos" and
+                page 2 is "City Photos".
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed">
+                <strong>In Data Analysis:</strong> A Gridplot does exactly this. Instead of cramming all your data
+                points onto a single messy graph, it splits your data based on a specific category (like 'City' or 'Time
+                of Day') and draws a clean, separate mini-graph for each category, side-by-side.
+            </p>
+        </section>
+
+        <!-- Relplot Section -->
+        <section class="space-y-8">
+            <div class="flex items-center gap-4 border-b-2 border-emerald-200 pb-2">
+                <div class="bg-emerald-500 text-white p-3 rounded-lg shadow-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800">1. Relational Plots <code
+                        class="text-emerald-600 bg-emerald-50 px-2 py-1 rounded text-2xl">(relplot)</code></h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Explanation Panel -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white border border-emerald-100 rounded-xl p-6 shadow-lg shadow-emerald-100/50">
+                        <h3 class="text-xl font-bold text-emerald-700 mb-2">What does it do?</h3>
+                        <p class="text-gray-600">A <strong>relplot</strong> visualizes the <em>relationship</em> between
+                            two numbers. It answers the question: <strong>"As X changes, what happens to Y?"</strong>
+                        </p>
+                    </div>
+
+                    <div class="bg-emerald-50 rounded-xl p-6 border border-emerald-100">
+                        <h3 class="text-lg font-bold text-emerald-800 mb-2">The Grid Superpower:</h3>
+                        <p class="text-emerald-700 text-sm mb-4">
+                            In our example to the right, we are looking at how <strong>Temperature</strong> affects
+                            <strong>Ice Cream Sales</strong>.
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-emerald-700 space-y-2">
+                            <li>Without a grid, all dots would be mixed up.</li>
+                            <li><strong>With a grid (relplot)</strong>, we split the data into "Downtown Stores" and
+                                "Beach Stores".</li>
+                            <li>Notice how easily you can see that temperature drives sales much faster at the beach!
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="inline-block bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-mono">Best
+                        for: Scatter Plots, Line Charts</div>
+                </div>
+
+                <!-- Visualization Panel -->
+                <div class="lg:col-span-2 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                    <div id="relplot-chart" class="w-full h-[400px]"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catplot Section -->
+        <section class="space-y-8">
+            <div class="flex items-center gap-4 border-b-2 border-rose-200 pb-2">
+                <div class="bg-rose-500 text-white p-3 rounded-lg shadow-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800">2. Categorical Plots <code
+                        class="text-rose-600 bg-rose-50 px-2 py-1 rounded text-2xl">(catplot)</code></h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+                <!-- Visualization Panel -->
+                <div class="lg:col-span-2 bg-white p-4 rounded-xl border border-gray-200 shadow-sm order-2 lg:order-1">
+                    <div id="catplot-chart" class="w-full h-[400px]"></div>
+                </div>
+
+                <!-- Explanation Panel -->
+                <div class="lg:col-span-1 space-y-6 order-1 lg:order-2">
+                    <div class="bg-white border border-rose-100 rounded-xl p-6 shadow-lg shadow-rose-100/50">
+                        <h3 class="text-xl font-bold text-rose-700 mb-2">What does it do?</h3>
+                        <p class="text-gray-600">A <strong>catplot</strong> compares a numerical value across different
+                            <em>categories</em> (groups). It answers: <strong>"How does group A compare to group
+                                B?"</strong></p>
+                    </div>
+
+                    <div class="bg-rose-50 rounded-xl p-6 border border-rose-100">
+                        <h3 class="text-lg font-bold text-rose-800 mb-2">The Grid Superpower:</h3>
+                        <p class="text-rose-700 text-sm mb-4">
+                            In this example, we compare <strong>Customer Satisfaction Scores</strong> between two store
+                            layouts (Classic vs. Modern).
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-rose-700 space-y-2">
+                            <li>Instead of just one overall comparison, the grid splits the view by
+                                <strong>Region</strong> (North vs. South).</li>
+                            <li>You can instantly see a hidden insight: The "Modern" layout is loved in the North, but
+                                actually performs worse in the South!</li>
+                        </ul>
+                    </div>
+                    <div class="inline-block bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-mono">Best
+                        for: Bar Charts, Box Plots, Violin Plots</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="bg-gray-50 border border-gray-200 p-8 rounded-2xl text-center shadow-sm">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Summary</h3>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                In Exploratory Data Analysis (EDA), grids are your best friend. They prevent
+                <strong>"overplotting"</strong> (when charts get too cluttered) and allow you to discover hidden trends
+                by looking at your data from multiple angles at the exact same time.
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-gray-400 text-sm border-t mt-8">
+        Interactive visualization created with HTML, TailwindCSS, and Plotly.js
+    </footer>
+
+    <script src="/js/gridplot.js"></script>
+</body>
+
+</html>

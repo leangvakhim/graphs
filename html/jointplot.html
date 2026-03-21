@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Joint Plots in EDA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plotly.js for the Chart -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 text-white">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Understanding Joint Plots</h1>
+            <p class="text-lg opacity-90">Your 3-in-1 tool for Exploratory Data Analysis (EDA)</p>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="p-6 md:p-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+            <!-- Left Side: The Chart -->
+            <div class="flex flex-col items-center">
+                <div class="w-full bg-white rounded-xl shadow-sm border border-gray-100 p-2 relative">
+                    <!-- Plot container -->
+                    <div id="jointPlot" class="w-full h-[500px]"></div>
+                </div>
+                <p class="text-sm text-gray-500 mt-4 text-center">Interactive graph: Try hovering over the dots and
+                    bars!</p>
+            </div>
+
+            <!-- Right Side: Explanations -->
+            <div class="flex flex-col justify-center space-y-6">
+
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">What is a Joint Plot? 🕵️‍♂️</h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        In Data Analysis (EDA), we often want to see how two things relate to each other. A Joint Plot
+                        is amazing because it combines <strong>three graphs into one</strong>. It shows the relationship
+                        between two variables, while simultaneously showing how each individual variable is distributed.
+                    </p>
+                </div>
+
+                <!-- Feature 1: Top Graph -->
+                <div class="relative pl-16 py-4">
+                    <div
+                        class="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-blue-100 text-blue-500 rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-blue-500">
+                        📊
+                    </div>
+                    <h3 class="text-lg font-bold text-blue-600">1. Top Graph (The Blue Bars)</h3>
+                    <p class="text-gray-600 text-sm mt-1 leading-relaxed">
+                        This is a <strong>Histogram</strong> for the X-axis (Hours Studied). It ignores the scores
+                        entirely and just tells you: <em>"How long do most students study?"</em> You can easily see the
+                        most common study times by looking at the tallest blue bars.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Right Graph -->
+                <div class="relative pl-16 py-4">
+                    <div
+                        class="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-green-500">
+                        📈
+                    </div>
+                    <h3 class="text-lg font-bold text-green-600">2. Right Graph (The Green Bars)</h3>
+                    <p class="text-gray-600 text-sm mt-1 leading-relaxed">
+                        This is the <strong>Histogram</strong> for the Y-axis (Exam Scores). It ignores the study hours
+                        and just tells you: <em>"What were the most common exam scores?"</em> It helps you spot if
+                        scores are mostly high, low, or average.
+                    </p>
+                </div>
+
+                <!-- Feature 3: Center Graph -->
+                <div class="relative pl-16 py-4">
+                    <div
+                        class="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-pink-500">
+                        ✨
+                    </div>
+                    <h3 class="text-lg font-bold text-pink-600">3. Center Graph (The Pink Dots)</h3>
+                    <p class="text-gray-600 text-sm mt-1 leading-relaxed">
+                        This is a <strong>Scatter Plot</strong>. This is where the magic happens! Every dot is one
+                        student. By looking at the pattern of the dots, you can answer: <em>"Do students who study more
+                            get higher scores?"</em> (In our chart, yes—the dots form an upward slope!).
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/jointplot.js"></script>
+</body>
+
+</html>
