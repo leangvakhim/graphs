@@ -45,10 +45,14 @@ function generateCluster(centerX, centerY, spread, count) {
 
 // --- Chart Configuration Builder ---
 function createScatterChart(canvasId, datasetLabel, data, dotColor, borderColor) {
-    const ctx = document.getElementById(canvasId).getContext('2d');
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
-    // Determine if data is an array of datasets (for clustering) or a single dataset
-    const datasets = Array.isArray(data[0]) ? data.map((d, index) => ({
+    // FIX: Check if it's our custom cluster array (checks if the first item has a 'points' key)
+    const isClusterData = data[0] && data[0].points !== undefined;
+
+    const datasets = isClusterData ? data.map((d, index) => ({
         label: `Cluster ${index + 1}`,
         data: d.points,
         backgroundColor: d.color,
@@ -125,29 +129,32 @@ window.onload = function () {
         i >= 50 ? 'rgba(0,0,0,0.8)' : 'rgba(245, 158, 11, 0.8)'
     );
 
-    const ctxOutlier = document.getElementById('chartOutlier').getContext('2d');
-    new Chart(ctxOutlier, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Data with Outliers',
-                data: baseData,
-                backgroundColor: outlierColors,
-                borderColor: outlierBorders,
-                borderWidth: 2,
-                pointRadius: baseData.map((pt, i) => i >= 50 ? 10 : 5), // Make outliers bigger!
-                pointHoverRadius: 12
-            }]
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { grid: { color: '#f0f0f0' }, ticks: { display: false } },
-                y: { grid: { color: '#f0f0f0' }, ticks: { display: false } }
+    const canvasOutlier = document.getElementById('chartOutlier');
+    if (canvasOutlier) {
+        const ctxOutlier = canvasOutlier.getContext('2d');
+        new Chart(ctxOutlier, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Data with Outliers',
+                    data: baseData,
+                    backgroundColor: outlierColors,
+                    borderColor: outlierBorders,
+                    borderWidth: 2,
+                    pointRadius: baseData.map((pt, i) => i >= 50 ? 10 : 5), // Make outliers bigger!
+                    pointHoverRadius: 12
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                scales: {
+                    x: { grid: { color: '#f0f0f0' }, ticks: { display: false } },
+                    y: { grid: { color: '#f0f0f0' }, ticks: { display: false } }
+                }
             }
-        }
-    });
+        });
+    }
 
     // 5. Clusters (3 distinct groups)
     const clusterData = [
