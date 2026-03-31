@@ -39,23 +39,22 @@ const traceScatter = {
 // Trace 2: The Top Histogram (Blue Bars for X-axis)
 const traceTopHistogram = {
     x: hoursStudied,
-    y: hoursStudied.map(() => 1), // Dummy Y values to create bars
+    // Removed dummy Y values - Plotly calculates bins automatically
     name: 'Study Hours Dist.',
     marker: { color: '#3b82f6' }, // Tailwind Blue-500
     type: 'histogram',
-    xaxis: 'x',
     yaxis: 'y2'
 };
 
 // Trace 3: The Right Histogram (Green Bars for Y-axis)
 const traceRightHistogram = {
     y: examScores,
-    x: examScores.map(() => 1), // Dummy X values to create bars
+    // Removed dummy X values - Plotly calculates bins automatically
     name: 'Scores Dist.',
     marker: { color: '#10b981' }, // Tailwind Green-500
     type: 'histogram',
-    xaxis: 'x2',
-    yaxis: 'y'
+    orientation: 'h', // <--- IMPORTANT: Tells Plotly to draw bars horizontally
+    xaxis: 'x2'
 };
 
 const data = [traceScatter, traceTopHistogram, traceRightHistogram];
